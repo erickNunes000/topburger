@@ -40,7 +40,7 @@ public class Application {
 		conn = DB.getConnection();
 		System.out.println("connected to erico´s database...");
 
-		Pedido pedido = new Pedido("pao integral sem casca", 21.55, "pendente","manoel filho", 1);
+		Pedido pedido = new Pedido(001,"pao integral sem casca", 21.55, "pendente","manoel filho", 1);
 		
 		PedidoDaoJDBC func = new PedidoDaoJDBC(conn);
 		func.inserir(pedido);

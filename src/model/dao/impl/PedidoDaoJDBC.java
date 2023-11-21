@@ -29,13 +29,14 @@ public class PedidoDaoJDBC implements PedidoDao{
 		PreparedStatement st = null;
 		
 		try {
-			st = conn.prepareStatement("insert into pedido(observacoes,valor,status,nome,fk_cliente_id ) values(?,?,?,?,?)",
+			st = conn.prepareStatement("insert into pedido(codigo, observacoes,valor,status,nome,fk_cliente_id ) values(?,?,?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
-			st.setString(1, obj.getObservacoes());
-			st.setDouble(2,obj.getValor());
-            st.setString(3,obj.getStatus());
-            st.setString(4,obj.getNome());
-            st.setInt(5, obj.getFk_cliente_id());
+			st.setInt(1, obj.getCodigo());
+			st.setString(2, obj.getObservacoes());
+			st.setDouble(3,obj.getValor());
+            st.setString(4,obj.getStatus());
+            st.setString(5,obj.getNome());
+            st.setInt(6, obj.getFk_cliente_id());
 			int linhas = st.executeUpdate();
 			if(linhas>0) {
 				ResultSet rs = st.getGeneratedKeys();
@@ -63,12 +64,12 @@ public class PedidoDaoJDBC implements PedidoDao{
 	public void atualizar(Pedido obj) {
 		PreparedStatement st = null;
 		try {
-			st=conn.prepareStatement("update pedido set observacoes=?, valor=?, status=? where fk_cliente_id=? and nome=?");
+			st=conn.prepareStatement("update pedido set observacoes=?, valor=?, status=? where fk_cliente_id=? and codigo=?");
 			st.setString(1, obj.getObservacoes());
             st.setDouble(2, obj.getValor());
             st.setString(3, obj.getStatus());
 			st.setInt(4, obj.getFk_cliente_id());
-            st.setString(5, obj.getNome());
+            st.setInt(5, obj.getCodigo());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -79,12 +80,12 @@ public class PedidoDaoJDBC implements PedidoDao{
 	}
 
 	@Override
-	public void deletarPorId(int id, String nome) {
+	public void deletarPorId(int codigo) {
 		PreparedStatement st = null;
 		try {
-			st=conn.prepareStatement("delete from pedido where fk_cliente_id=? and nome=?");
-			st.setInt(1, id);
-            st.setString(2, nome);
+			st=conn.prepareStatement("delete from pedido where codigo=?");
+			st.setInt(1, codigo);
+           
 			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -95,13 +96,13 @@ public class PedidoDaoJDBC implements PedidoDao{
 	}
 
 	@Override
-	public Pedido procurarPorId(int id, String nome) {
+	public Pedido procurarPorId(int codigo) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("select * from pedido where fk_cliente_id=? and nome=?");
-			st.setInt(1, id);
-            st.setString(2, nome);
+			st = conn.prepareStatement("select * from pedido where codigo=?");
+			st.setInt(1, codigo);
+           
 			rs = st.executeQuery();
 			
 			if(rs.next()) {
@@ -126,6 +127,7 @@ public class PedidoDaoJDBC implements PedidoDao{
 
     private Pedido instanciadorPedido(ResultSet rs) throws SQLException{
 		 Pedido pedido = new Pedido();
+		 	pedido.setCodigo(rs.getInt("codigo"));
 			pedido.setObservacoes(rs.getString("observacoes"));
             pedido.setValor(rs.getDouble("valor"));
 			pedido.setStatus(rs.getString("status"));

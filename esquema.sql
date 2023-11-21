@@ -20,7 +20,7 @@ CREATE TABLE produto (/*ok*/
 
 
 CREATE TABLE Pedido (/*ok*/
-
+    id INTEGER PRIMARY KEY,
     observacoes VARCHAR(200),
     valor DOUBLE,
     status VARCHAR(100),

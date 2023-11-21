@@ -3,7 +3,7 @@ import java.util.Objects;
 import java.sql.Date;
 
 public class Pedido {
-    //private int codigo //ideia para chave primaria
+    private int codigo; //ideia para chave primaria
     private String observacoes;
     private Double valor;
     private String status;
@@ -13,7 +13,8 @@ public class Pedido {
 
     public Pedido(){}
 
-    public Pedido(String observacoes, Double valor, String status, String nome, int fk_cliente_id){
+    public Pedido(int codigo, String observacoes, Double valor, String status, String nome, int fk_cliente_id){
+        this.codigo=codigo;
         this.observacoes = observacoes;
         this.valor = valor;
         this.status = status;
@@ -21,9 +22,15 @@ public class Pedido {
         this.fk_cliente_id = fk_cliente_id;
 
     }
+    public int getCodigo() {
+        return this.codigo;
+    }
 
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
     public String getObservacoes() {
-        return observacoes;
+        return this.observacoes;
     }
 
     public void setObservacoes(String observacoes) {
@@ -31,7 +38,7 @@ public class Pedido {
     }
 
     public Double getValor() {
-        return valor;
+        return this.valor;
     }
 
     public void setValor(Double valor) {
@@ -39,7 +46,7 @@ public class Pedido {
     }
 
     public String getStatus() {
-        return status;
+        return this.status;
     }
 
     public void setStatus(String status) {
@@ -47,7 +54,7 @@ public class Pedido {
     }
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     public void setNome(String nome) {
@@ -55,7 +62,7 @@ public class Pedido {
     }
 
     public Date getCompra() {
-        return compra;
+        return this.compra;
     }
 
     public void setCompra(Date compra) {
@@ -63,7 +70,7 @@ public class Pedido {
     }
 
     public int getFk_cliente_id() {
-        return fk_cliente_id;
+        return this.fk_cliente_id;
     }
 
     public void setFk_cliente_id(int fk_cliente_id) {
@@ -73,12 +80,12 @@ public class Pedido {
     //demais metodos
     @Override
 	public String toString() {
-		return " Pedido [valor=" + valor + ", status=" + status+ ", observacoes=" + observacoes  + "Cliente(id)"+ fk_cliente_id + "]";
+		return " Informações do Pedido [valor = R$ " + valor + ", status=" + status+ " ,codigo da compra ="+ codigo+", observacoes =" + observacoes  + "Cliente(id)"+ fk_cliente_id + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(fk_cliente_id);
+		return Objects.hash(codigo);
 	}
 
 	@Override
@@ -90,7 +97,7 @@ public class Pedido {
 		if (getClass() != obj.getClass())
 			return false;
 		Pedido other = (Pedido) obj;
-		return fk_cliente_id == other.fk_cliente_id;
+		return codigo == other.codigo;
 	}
 
 }
